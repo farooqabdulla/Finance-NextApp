@@ -3,10 +3,12 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+export default function SignForm() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [phonenumber, setPhno] = useState("");
+  const [name, setName] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -46,11 +48,28 @@ export default function LoginForm() {
         {/* Right Section */}
         <div className="bg-white flex items-center justify-center p-8">
           <div className="max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-6">Login</h2>
+            <h2 className="text-2xl font-bold mb-6">Sign up</h2>
             <form className="space-y-4" onSubmit={handleLogin}>
               <div className="space-y-2">
                 <label
-                  htmlFor="email"
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Enter your Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Email
@@ -58,9 +77,26 @@ export default function LoginForm() {
                 <input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your Email"
+                  required
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="phonenumber"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Phone Number
+                </label>
+                <input
+                  id="phonenumber"
+                  type="number"
+                  value={phonenumber}
+                  onChange={(e) => setPhno(e.target.value)}
+                  placeholder="Enter your Number"
                   required
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -83,15 +119,6 @@ export default function LoginForm() {
                 />
               </div>
               
-              <div className="flex justify-between items-center">
-                <label className="flex items-center text-sm text-gray-600">
-                  <input type="checkbox" className="mr-2" />
-                  Remember me
-                </label>
-                <a href="#" className="text-sm text-indigo-600 hover:underline">
-                  Forget Password?
-                </a>
-              </div>
               <button
                 type="submit"
                 className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition duration-200"
@@ -101,12 +128,12 @@ export default function LoginForm() {
             </form>
 
             <div className="mt-6 text-center text-sm text-gray-600">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <a
-                href="/sign-up"
+                href="/login"
                 className="font-medium text-indigo-600 hover:underline"
               >
-                Sign up
+                Login
               </a>
             </div>
           </div>
