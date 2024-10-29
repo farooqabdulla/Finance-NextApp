@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.sidebaractive{
+    @apply bg-blue-100 text-blue-600 rounded-lg;
+}
+/* .sidebaractive{
+    @apply bg-gray-200 text-gray-600 rounded-md;
+} */
+.bgc{
+    background-image: radial-gradient(circle at center center, transparent 0%,rgb(79,70,229) 99%),repeating-linear-gradient(0deg, rgba(163, 163, 163,0.2) 0px, rgba(163, 163, 163,0.2) 1px,transparent 1px, transparent 6px),repeating-linear-gradient(90deg, rgba(163, 163, 163,0.2) 0px, rgba(163, 163, 163,0.2) 1px,transparent 1px, transparent 6px),linear-gradient(90deg, rgb(79,70,229),rgb(79,70,229));
+}
