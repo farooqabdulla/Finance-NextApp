@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import LandingNavbar from '../components/LandingNavbar';
 import Image from 'next/image';
+import KeyFeatures from '@/components/Home.jsx/KeyFeatures';
 
 export default function LandingPage() {
   return (
@@ -33,6 +34,7 @@ export default function LandingPage() {
           <span className="font-semibold">Manage Your Finances Seamlessly:</span> Loan tracking system offers a comprehensive solution for businesses and individuals looking to efficiently manage loans, repayments, and participant contributions. With an easy-to-use interface, powerful reporting tools, and customizable payment schedules, managing your financial operations has never been easier.
         </p>
       </section>
+      <KeyFeatures/>
       <footer className="w-full md:flex justify-between h-[50vh] bg-[#191D31] text-white px-[6vw] border-t border-gray-700 pt-[5vh]">
         <div className="w-[23%]">
           <h2 className="text-2xl font-bold">Finance App</h2>
