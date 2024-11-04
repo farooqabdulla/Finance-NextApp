@@ -6,15 +6,15 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="flex h-screen">
       {/* Fixed Sidebar */}
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col">
         {/* Fixed Navbar */}
-        <DashboardNavbar />
+        {/* <DashboardNavbar /> */}
         
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="">
           {children}
         </div>
       </div>
