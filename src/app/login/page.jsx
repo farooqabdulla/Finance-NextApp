@@ -2,18 +2,63 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LoginForm() {
   const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const intialData = {
+    email: "",
+    password: "",
+  };
+  const [formData, setFormData] = useState(intialData);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handleLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === "12345") {
-      router.push("/dashboard");
+    if (!formData.password) {
+      console.log("password not Entered");
     } else {
-      alert("Incorrect password");
+      try {
+        const formResponse = await fetch("/api/retriveUser", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: { "CONTENT-TYPE": "application/json" },
+        });
+        if (formResponse.ok) {
+          router.push("/dashboard");
+          toast.success("User login SuccessFull..!!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+          });
+          setFormData(intialData);
+        } else {
+          toast.error("Failed to login..", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+          });
+        }
+      } catch (error) {
+        toast.error(error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+        });
+      }
     }
   };
 
@@ -47,7 +92,7 @@ export default function LoginForm() {
         <div className="bg-white flex items-center justify-center p-8">
           <div className="max-w-md w-full">
             <h2 className="text-2xl font-bold mb-6">Login</h2>
-            <form className="space-y-4" onSubmit={handleLogin}>
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="space-y-2">
                 <label
                   htmlFor="email"
@@ -58,9 +103,10 @@ export default function LoginForm() {
                 <input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
@@ -75,14 +121,15 @@ export default function LoginForm() {
                 <input
                   id="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   placeholder="Enter your password"
                   required
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
-              
+
               <div className="flex justify-between items-center">
                 <label className="flex items-center text-sm text-gray-600">
                   <input type="checkbox" className="mr-2" />
