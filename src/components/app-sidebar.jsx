@@ -35,7 +35,7 @@ export function AppSidebar({ ...props }) {
     user: {
       name: userData.name,
       email: userData.email,
-      avatar: "/avatars/shadcn.jpg",
+      // avatar: "/avatars/shadcn.jpg",
     },
     teams: [
       {
