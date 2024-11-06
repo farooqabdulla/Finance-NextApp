@@ -1,26 +1,34 @@
-// middleware.js
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 
-export function middleware(request) {
+export async function middleware(request) {
   const token = request.cookies.get("tokenLog")?.value;
 
-  // Redirect to login if there's no token
-  if (!token) {
+  const loginOrSignup = ["/login", "/sign-up"];
+  const isAuthPage = loginOrSignup.includes(request.nextUrl.pathname);
+
+  if (token && isAuthPage) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  if (!token && !isAuthPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
-    // Verify the token using your JWT secret
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    await jwtVerify(token, secret);
 
     return NextResponse.next();
   } catch (error) {
-    // If token verification fails, redirect to login
-    return NextResponse.redirect(new URL("/login", request.url));
+    if (!isAuthPage) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"], // Only apply middleware to protected routes
+  matcher: ["/dashboard/:path*", "/login", "/sign-up"], 
 };
